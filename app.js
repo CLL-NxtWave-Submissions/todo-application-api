@@ -119,8 +119,8 @@ app.put("/todos/:todoId", async (req, res) => {
   const { todoId } = req.params;
   const { todo, priority, status } = req.body;
 
-  const queryToUpdateSpecificTodoItemData = "";
-  const todoUpdateSuccessMsg = "";
+  let queryToUpdateSpecificTodoItemData = "";
+  let todoUpdateSuccessMsg = "";
 
   if (todo !== undefined) {
     queryToUpdateSpecificTodoItemData = `
@@ -149,7 +149,7 @@ app.put("/todos/:todoId", async (req, res) => {
         UPDATE
             todo
         SET
-            status = '${status};
+            status = '${status}';
         WHERE
             id = ${todoId};
         `;
