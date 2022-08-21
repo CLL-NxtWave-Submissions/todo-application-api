@@ -32,4 +32,34 @@ const initializeDBAndServer = async () => {
 
 initializeDBAndServer();
 
+/*
+    End-Point 1      : GET /todos
+    Query Parameters : priority, status, search_q
+    ----------------- 
+    To handle client requests to fetch
+    todo item data based on certain filters
+    passed through query parameters
+*/
+app.get("/todos", async (req, res) => {
+  const { search_q = "", priority = "", status = "" } = req.query;
+
+  const getTodoItemDataQuery = `
+  SELECT
+    *
+  FROM
+    todo
+  WHERE
+    todo LIKE '%${search_q}%'
+    AND
+    priority LIKE '%${priority}%'
+    AND
+    status LIKE '%${status}%';
+  `;
+
+  const todoItemData = await todoApplicationDBConnectionObj.all(
+    getTodoItemDataQuery
+  );
+  res.send(todoItemData);
+});
+
 module.exports = app;
